@@ -1,0 +1,95 @@
+# cURL examples  examen-tecnico
+
+## Ejercicio 1: POST /api/saludo
+
+Requiere un JSON con un campo nombre. Responde 200 si el campo existe,
+o 400 si falta.
+
+### Ejemplo en PowerShell (escapando comillas):
+
+powershell
+curl -i -X POST http://localhost:8000/api/saludo \
+     -H "Content-Type: application/json" \
+     -d "{\"nombre\":\"Juan\"}"
+
+
+### Ejemplo en cmd.exe (comillas escapadas y continuation):
+
+cmd
+curl -i -X POST http://localhost:8000/api/saludo ^
+  -H "Content-Type: application/json" ^
+  -d "{\"nombre\":\"Juan\"}"
+
+
+### Alternativa usando un fichero de cuerpo
+
+powershell
+@'
+{"nombre":"Juan"}
+'@ > body.json
+curl -i -X POST http://localhost:8000/api/saludo \
+     -H "Content-Type: application/json" \
+     -d @body.json
+
+
+Los casos de error se probaban enviando {} o JSON inválido, lo que
+produce la respuesta {"error":"nombre requerido"} con código 400.
+
+---
+
+## Ejercicio 2: POST /api/registros
+
+Recibe un JSON con campos usuario_id, descripcion y opcional origen.
+Valida que usuario_id sea entero mayor que 0 y que descripcion no esté
+vacío; chequea duplicados y persiste la entidad Registro.
+
+### Ejemplo en PowerShell:
+
+powershell
+curl -i -X POST http://localhost:8000/api/registros \
+     -H "Content-Type: application/json" \
+     -d "{\"usuario_id\":15,\"descripcion\":\"Registro de prueba\",\"origen\":\"WEB\"}"
+
+
+### Ejemplo en cmd.exe:
+
+cmd
+curl -i -X POST http://localhost:8000/api/registros ^
+  -H "Content-Type: application/json" ^
+  -d "{\"usuario_id\":15,\"descripcion\":\"Registro de prueba\",\"origen\":\"WEB\"}"
+
+
+Alternativa con fichero:
+
+powershell
+@'
+{"usuario_id":15,"descripcion":"Registro de prueba","origen":"WEB"}
+'@ > registro.json
+curl -i -X POST http://localhost:8000/api/registros \
+     -H "Content-Type: application/json" \
+     -d @registro.json
+
+
+Respuestas esperadas:
+
+* 201 Created con {"ok":true,"id":<id>} si se crea correctamente.
+* 400 Bad Request con {"ok":false,"error":"Datos inválidos"}
+  si los datos faltan o no son válidos.
+* 409 Conflict con {"ok":false,"error":"Registro duplicado"}
+  si ya existe un registro con el mismo usuario_id y descripcion.
+
+---
+
+## Endpoint de prueba adicional
+
+GET /exam/generate no forma parte de los ejercicios, es un stub que
+responde siempre 200. Se usa para verificar que el servidor está activo
+sin necesidad de datos.
+
+bash
+curl -i http://localhost:8000/exam/generate
+
+
+json
+{"status":"ok","message":"Exam generator stub running"}
+

@@ -1,0 +1,17 @@
+Ejercicio básico Symfony
+Crear un endpoint:
+POST /api/saludo
+Recibe:
+{
+  "nombre": "Juan"
+}
+Debe:
+•	Validar que el campo nombre exista
+•	Responder:
+
+Si es correcto:
+{ "mensaje": "Hola Juan" }
+
+Si falta el campo:
+{ "error": "nombre requerido" }
+

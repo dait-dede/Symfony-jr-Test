@@ -1,0 +1,34 @@
+Flujo para validar el endpoint /exam/generate
+
+1. Arrancar el servidor HTTP:
+
+   symfony serve
+   # ó bien:
+   php -S localhost:8000 -t public
+
+2. Ejecutar petición curl desde otra terminal:
+
+   curl -i http://localhost:8000/exam/generate
+
+   (para salida formateada con jq: curl http://localhost:8000/exam/generate | jq .)
+
+3. Resultado esperado:
+
+   HTTP/1.1 200 OK
+   content-type: application/json
+
+   {"status":"ok","message":"Exam generator stub running"}
+
+4. Si necesitas depurar, coloca dump()/dd() en
+   src/Controller/ExamController.php y habilita
+   APP_DEBUG=1 en .env.
+
+ASCII diagram:
+
+    [browser or curl] --> HTTP GET /exam/generate --> [Symfony server]
+                                         |
+                                         v
+                                returns JSON stub
+
+Este archivo se encuentra en doc/flow.txt y sirve
+para validar rápidamente que el flujo funciona.
