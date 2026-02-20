@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ExamController extends AbstractController
 {
-    #[Route('/exam/generate', name: 'exam_generate', methods: ['GET'])]
+    #[Route('/exam/generate', name: 'exam_generat', methods: ['GET'])]
     public function generate(): Response
     {
         // this is a placeholder; real logic should create database records, etc.
