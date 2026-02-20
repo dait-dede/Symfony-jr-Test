@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SaludoController extends AbstractController
+class SaludoController extends AbstractController;
 {
     #[Route('/api/saludo', name: 'api_saludo', methods: ['POST'])]
     public function saludo(Request $request): JsonResponse
